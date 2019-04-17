@@ -15,26 +15,18 @@
  */
 package org.reaktivity.ry.internal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.reaktivity.ry.RyCommand;
-import org.reaktivity.ry.RyCommandSpi;
-
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Cli.CliBuilder;
-import io.airlift.airline.Command;
+import org.junit.jupiter.api.Test;
 
 public class RyMainTest
 {
-    private static final ThreadLocal<String> TEST_COMMAND = new ThreadLocal<>();
-
     @Test
     public void shouldInvokeTestCommandWithDefaultArgument()
     {
         RyMain.main(new String[] { "test" });
 
-        assertEquals("arg", TEST_COMMAND.get());
+        assertEquals("arg", RyTestCommand.TEST_ARGUMENT.get());
     }
 
     @Test
@@ -42,29 +34,6 @@ public class RyMainTest
     {
         RyMain.main(new String[] { "test", "arg1" });
 
-        assertEquals("arg1", TEST_COMMAND.get());
-    }
-
-    public static final class RyTestSpi implements RyCommandSpi
-    {
-        @Override
-        public void mixin(
-            CliBuilder<Runnable> builder)
-        {
-            builder.withCommand(RyTest.class);
-        }
-    }
-
-    @Command(name = "test")
-    public static final class RyTest extends RyCommand
-    {
-        @Arguments(description = "argument")
-        public String argument = "arg";
-
-        @Override
-        public void run()
-        {
-            TEST_COMMAND.set(argument);
-        }
+        assertEquals("arg1", RyTestCommand.TEST_ARGUMENT.get());
     }
 }

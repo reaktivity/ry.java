@@ -15,8 +15,8 @@
  */
 package org.reaktivity.ry;
 
-import io.airlift.airline.Option;
-import io.airlift.airline.OptionType;
+import com.github.rvesse.airline.annotations.Option;
+import com.github.rvesse.airline.annotations.OptionType;
 
 public abstract class RyCommand implements Runnable
 {

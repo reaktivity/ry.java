@@ -13,11 +13,21 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package org.reaktivity.ry;
-
-import com.github.rvesse.airline.builder.CliBuilder;
-
-public interface RyCommandSpi
+module org.reaktivity.ry
 {
-    void mixin(CliBuilder<Runnable> builder);
+    opens org.reaktivity.ry
+       to com.github.rvesse.airline;
+
+    opens org.reaktivity.ry.internal
+       to com.github.rvesse.airline;
+
+    requires com.github.rvesse.airline;
+    requires java.json;
+
+    exports org.reaktivity.ry;
+
+    uses org.reaktivity.ry.RyCommandSpi;
+
+    provides org.reaktivity.ry.RyCommandSpi
+        with org.reaktivity.ry.internal.RyTestCommand;
 }

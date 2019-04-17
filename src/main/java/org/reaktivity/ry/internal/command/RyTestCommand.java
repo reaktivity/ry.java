@@ -13,11 +13,33 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package org.reaktivity.ry;
+package org.reaktivity.ry.internal;
 
+import org.reaktivity.ry.RyCommand;
+import org.reaktivity.ry.RyCommandSpi;
+
+import com.github.rvesse.airline.annotations.Arguments;
+import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.builder.CliBuilder;
 
-public interface RyCommandSpi
+@Command(name = "test")
+public final class RyTestCommand extends RyCommand implements RyCommandSpi
 {
-    void mixin(CliBuilder<Runnable> builder);
+    public static final ThreadLocal<String> TEST_ARGUMENT = new ThreadLocal<>();
+
+    @Override
+    public void mixin(
+        CliBuilder<Runnable> builder)
+    {
+        builder.withCommand(RyTestCommand.class);
+    }
+
+    @Arguments(description = "argument")
+    public String argument = "arg";
+
+    @Override
+    public void run()
+    {
+        TEST_ARGUMENT.set(argument);
+    }
 }

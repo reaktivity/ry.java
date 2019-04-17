@@ -19,13 +19,14 @@ import java.util.ServiceLoader;
 
 import org.reaktivity.ry.RyCommandSpi;
 
-import io.airlift.airline.Cli;
-import io.airlift.airline.Cli.CliBuilder;
-import io.airlift.airline.Help;
+import com.github.rvesse.airline.Cli;
+import com.github.rvesse.airline.builder.CliBuilder;
+import com.github.rvesse.airline.help.Help;
 
 public final class RyMain
 {
     private static final String RY_EXECUTABLE_NAME = "ry";
+//    private static final String RY_DEPENDENCIES_NAME = "ry.deps";
 
     public static void main(
         String[] args)
@@ -34,7 +35,6 @@ public final class RyMain
                 .withDefaultCommand(Help.class)
                 .withCommand(Help.class);
 
-        // TODO: build class path via configuration
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         for (RyCommandSpi service : ServiceLoader.load(RyCommandSpi.class, loader))
         {
@@ -46,6 +46,32 @@ public final class RyMain
 
         command.run();
     }
+
+//    public static ClassLoader initClassLoader()
+//    {
+//        URL[] deps;
+//
+//        try (InputStream in = Files.newInputStream(Paths.get(RY_DEPENDENCIES_NAME)))
+//        {
+//            // parse JSON
+//
+//            // construct equivalent POM
+//            // note: implicitly include ry.java dependencies, requires awareness of own version via Package API
+//
+//            // use Maven / Ivy to construct class loader
+//            // including transitive dependencies
+//
+//            // TODO
+//            deps = new URL[0];
+//        }
+//        catch (IOException ex)
+//        {
+//            // TODO: log warning
+//            deps = new URL[0];
+//        }
+//
+//        return new URLClassLoader(deps, Thread.currentThread().getContextClassLoader());
+//    }
 
     private RyMain()
     {
