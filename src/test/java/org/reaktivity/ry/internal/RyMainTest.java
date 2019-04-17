@@ -18,6 +18,7 @@ package org.reaktivity.ry.internal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.reaktivity.ry.internal.command.RyTestCommand;
 
 public class RyMainTest
 {

@@ -15,12 +15,6 @@
  */
 module org.reaktivity.ry
 {
-    opens org.reaktivity.ry
-       to com.github.rvesse.airline;
-
-    opens org.reaktivity.ry.internal
-       to com.github.rvesse.airline;
-
     requires com.github.rvesse.airline;
     requires java.json;
 
@@ -28,6 +22,13 @@ module org.reaktivity.ry
 
     uses org.reaktivity.ry.RyCommandSpi;
 
+
+    opens org.reaktivity.ry
+       to com.github.rvesse.airline;
+
+    opens org.reaktivity.ry.internal.command
+       to com.github.rvesse.airline;
+
     provides org.reaktivity.ry.RyCommandSpi
-        with org.reaktivity.ry.internal.RyTestCommand;
+        with org.reaktivity.ry.internal.command.RyTestCommand;
 }

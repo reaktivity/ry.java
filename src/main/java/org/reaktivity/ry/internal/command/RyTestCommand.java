@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package org.reaktivity.ry.internal;
+package org.reaktivity.ry.internal.command;
 
 import org.reaktivity.ry.RyCommand;
 import org.reaktivity.ry.RyCommandSpi;
