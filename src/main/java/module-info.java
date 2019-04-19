@@ -15,8 +15,7 @@
  */
 module org.reaktivity.ry
 {
-    requires com.github.rvesse.airline;
-    requires java.json;
+    requires transitive com.github.rvesse.airline;
 
     exports org.reaktivity.ry;
 
