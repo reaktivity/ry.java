@@ -15,25 +15,16 @@
  */
 package org.reaktivity.ry.internal.command;
 
+import static org.reaktivity.ry.internal.RyTestCommandSpi.TEST_ARGUMENT;
+
 import org.reaktivity.ry.RyCommand;
-import org.reaktivity.ry.RyCommandSpi;
 
 import com.github.rvesse.airline.annotations.Arguments;
 import com.github.rvesse.airline.annotations.Command;
-import com.github.rvesse.airline.builder.CliBuilder;
 
-@Command(name = "test")
-public final class RyTestCommand extends RyCommand implements RyCommandSpi
+@Command(name = "test", hidden = true)
+public final class RyTestCommand extends RyCommand
 {
-    public static final ThreadLocal<String> TEST_ARGUMENT = new ThreadLocal<>();
-
-    @Override
-    public void mixin(
-        CliBuilder<Runnable> builder)
-    {
-        builder.withCommand(RyTestCommand.class);
-    }
-
     @Arguments(description = "argument")
     public String argument = "arg";
 

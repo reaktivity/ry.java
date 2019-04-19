@@ -16,9 +16,9 @@
 package org.reaktivity.ry.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.reaktivity.ry.internal.RyTestCommandSpi.TEST_ARGUMENT;
 
 import org.junit.jupiter.api.Test;
-import org.reaktivity.ry.internal.command.RyTestCommand;
 
 public class RyMainTest
 {
@@ -27,7 +27,7 @@ public class RyMainTest
     {
         RyMain.main(new String[] { "test" });
 
-        assertEquals("arg", RyTestCommand.TEST_ARGUMENT.get());
+        assertEquals("arg", TEST_ARGUMENT.get());
     }
 
     @Test
@@ -35,6 +35,6 @@ public class RyMainTest
     {
         RyMain.main(new String[] { "test", "arg1" });
 
-        assertEquals("arg1", RyTestCommand.TEST_ARGUMENT.get());
+        assertEquals("arg1", TEST_ARGUMENT.get());
     }
 }

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2016-2019 The Reaktivity Project
  *
  * The Reaktivity Project licenses this file to you under the Apache License,
@@ -13,6 +13,23 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-//--add-reads org.reaktivity.ry=org.junit.jupiter.api,com.github.rvesse.airline
+package org.reaktivity.ry.internal;
 
-//--add-opens org.reaktivity.ry/org.reaktivity.ry.internal=org.junit.platform.commons
+import org.reaktivity.ry.RyCommandSpi;
+import org.reaktivity.ry.internal.command.RyTestCommand;
+
+import com.github.rvesse.airline.annotations.Command;
+import com.github.rvesse.airline.builder.CliBuilder;
+
+@Command(name = "test")
+public final class RyTestCommandSpi implements RyCommandSpi
+{
+    public static final ThreadLocal<String> TEST_ARGUMENT = new ThreadLocal<>();
+
+    @Override
+    public void mixin(
+        CliBuilder<Runnable> builder)
+    {
+        builder.withCommand(RyTestCommand.class);
+    }
+}
