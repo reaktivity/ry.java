@@ -16,7 +16,6 @@
 package org.reaktivity.ry.internal;
 
 import org.reaktivity.ry.RyCommandSpi;
-import org.reaktivity.ry.internal.command.RyTestCommand;
 
 import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.builder.CliBuilder;
