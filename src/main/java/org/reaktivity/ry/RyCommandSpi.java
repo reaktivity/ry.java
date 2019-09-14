@@ -21,3 +21,4 @@ public interface RyCommandSpi
 {
     void mixin(CliBuilder<Runnable> builder);
 }
+

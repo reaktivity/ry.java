@@ -23,3 +23,4 @@ public abstract class RyCommand implements Runnable
     @Option(type = OptionType.GLOBAL, name = "-v", description = "verbose")
     public boolean verbose;
 }
+
