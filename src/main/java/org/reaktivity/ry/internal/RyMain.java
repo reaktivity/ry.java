@@ -61,9 +61,9 @@ public final class RyMain
 
     private static final String DEFAULT_GROUP_ID = "org.reaktivity";
 
-    private static Map<String, String> dependencies = new LinkedHashMap<>(); // TODO Done correctly?
-    
-    private static List<URL> artifactOrigins = new LinkedList<>(); // TODO Done correctly?
+    private static Map<String, String> dependencies = new LinkedHashMap<>();
+
+    private static List<URL> artifactOrigins = new LinkedList<>();
 
     public static void main(
         String[] args)
@@ -79,7 +79,8 @@ public final class RyMain
 
         try
         {
-            readDepsFile();
+            final File depsFile = resolveDepsFile();
+            readDepsFile(depsFile);
 
             boolean resolved = resolveDependencies(options);
             if (!resolved)
@@ -88,7 +89,7 @@ public final class RyMain
             }
 
             URLClassLoader loader  = new URLClassLoader(
-                (URL[]) artifactOrigins.toArray(new URL[artifactOrigins.size()]),
+                artifactOrigins.toArray(new URL[artifactOrigins.size()]),
                 Thread.currentThread().getContextClassLoader());
             for (RyCommandSpi service : ServiceLoader.load(RyCommandSpi.class, loader))
             {
@@ -105,14 +106,11 @@ public final class RyMain
         }
 
         final Cli<Runnable> parser = builder.build();
-        final Runnable command = parser.parse(args);
-        
-        command.run();
+        parser.parse(args).run();
     }
 
-    private static void readDepsFile() throws IOException
+    private static File resolveDepsFile() throws IOException
     {
-        JsonElement deps = null;
         File depsFile = new File(DEPENDENCY_LOCK_FILENAME);
         if (!depsFile.exists())
         {
@@ -123,6 +121,13 @@ public final class RyMain
                     String.format("Cannot find %s or %s", DEPENDENCY_LOCK_FILENAME, DEPENDENCY_FILENAME));
             }
         }
+        return depsFile;
+    }
+
+    private static void readDepsFile(File depsFile) throws IOException
+    {
+        JsonElement deps = null;
+
         try (BufferedReader br = new BufferedReader(new FileReader(depsFile)))
         {
             deps = new JsonParser().parse(br);
@@ -189,4 +194,3 @@ public final class RyMain
         // utility class
     }
 }
-
