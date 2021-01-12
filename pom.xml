@@ -145,6 +145,9 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.6</version>
         <configuration>
+          <excludes>
+            <exclude>org/reaktivity/ry/internal/RyMain.class</exclude>
+          </excludes>
           <rules>
             <rule>
               <element>BUNDLE</element>

@@ -25,16 +25,26 @@ public class RyMainTest
     @Test
     public void shouldInvokeTestCommandWithDefaultArgument()
     {
-        RyMain.main(new String[] { "test" });
+        int status = RyMain.invoke(new String[] { "test" });
 
+        assertEquals(0, status);
         assertEquals("arg", TEST_ARGUMENT.get());
     }
 
     @Test
     public void shouldInvokeTestCommandWithOverriddenArgument()
     {
-        RyMain.main(new String[] { "test", "arg1" });
+        int status = RyMain.invoke(new String[] { "test", "arg1" });
 
+        assertEquals(0, status);
         assertEquals("arg1", TEST_ARGUMENT.get());
+    }
+
+    @Test
+    public void shouldInvokeTestCommandThatThrowsException()
+    {
+        int status = RyMain.invoke(new String[] { "test", "throw" });
+
+        assertEquals(1, status);
     }
 }

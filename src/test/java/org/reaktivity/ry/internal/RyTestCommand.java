@@ -31,6 +31,11 @@ public final class RyTestCommand extends RyCommand
     @Override
     public void run()
     {
+        if ("throw".equals(argument))
+        {
+            throw new RuntimeException();
+        }
+
         TEST_ARGUMENT.set(argument);
     }
 }
