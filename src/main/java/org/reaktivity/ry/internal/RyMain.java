@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2020 The Reaktivity Project
+ * Copyright 2016-2021 The Reaktivity Project
  *
  * The Reaktivity Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -26,57 +26,54 @@ import com.github.rvesse.airline.help.Help;
 public final class RyMain
 {
     private static final String RY_EXECUTABLE_NAME = "ry";
-    //private static final String RY_DEPENDENCIES_NAME = "ry.deps";
 
     public static void main(
         String[] args)
     {
-        final CliBuilder<Runnable> builder = Cli.<Runnable>builder(RY_EXECUTABLE_NAME)
-                .withDefaultCommand(Help.class)
-                .withCommand(Help.class);
-
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        for (RyCommandSpi service : ServiceLoader.load(RyCommandSpi.class, loader))
-        {
-            service.mixin(builder);
-        }
-
-        final Cli<Runnable> parser = builder.build();
-        final Runnable command = parser.parse(args);
-
-        command.run();
+        System.exit(invoke(args));
     }
 
-    /*
-    public static ClassLoader initClassLoader()
+    static int invoke(
+        String[] args)
     {
-        URL[] deps;
-
-        try (InputStream in = Files.newInputStream(Paths.get(RY_DEPENDENCIES_NAME)))
-        {
-            // parse JSON
-
-            // construct equivalent POM
-            // note: implicitly include ry.java dependencies, requires awareness of own version via Package API
-
-            // use Maven / Ivy to construct class loader
-            // including transitive dependencies
-
-            // TODO
-            deps = new URL[0];
-        }
-        catch (IOException ex)
-        {
-            // TODO: log warning
-            deps = new URL[0];
-        }
-
-        return new URLClassLoader(deps, Thread.currentThread().getContextClassLoader());
+        return Invoker.invoke(args);
     }
-    */
 
     private RyMain()
     {
+    }
+
+    private static final class Invoker
+    {
+        private static int invoke(
+            String[] args)
+        {
+            final CliBuilder<Runnable> builder = Cli.<Runnable>builder(RY_EXECUTABLE_NAME)
+                    .withDefaultCommand(Help.class)
+                    .withCommand(Help.class);
+
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            for (RyCommandSpi service : ServiceLoader.load(RyCommandSpi.class, loader))
+            {
+                service.mixin(builder);
+            }
+
+            final Cli<Runnable> parser = builder.build();
+            final Runnable command = parser.parse(args);
+
+            int status = 0;
+            try
+            {
+                command.run();
+            }
+            catch (Throwable ex)
+            {
+                // TODO: debug output
+                status = 1;
+            }
+
+            return status;
+        }
     }
 }
 

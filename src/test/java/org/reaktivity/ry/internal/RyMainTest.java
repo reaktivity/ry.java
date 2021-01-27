@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2020 The Reaktivity Project
+ * Copyright 2016-2021 The Reaktivity Project
  *
  * The Reaktivity Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -25,16 +25,26 @@ public class RyMainTest
     @Test
     public void shouldInvokeTestCommandWithDefaultArgument()
     {
-        RyMain.main(new String[] { "test" });
+        int status = RyMain.invoke(new String[] { "test" });
 
+        assertEquals(0, status);
         assertEquals("arg", TEST_ARGUMENT.get());
     }
 
     @Test
     public void shouldInvokeTestCommandWithOverriddenArgument()
     {
-        RyMain.main(new String[] { "test", "arg1" });
+        int status = RyMain.invoke(new String[] { "test", "arg1" });
 
+        assertEquals(0, status);
         assertEquals("arg1", TEST_ARGUMENT.get());
+    }
+
+    @Test
+    public void shouldInvokeTestCommandThatThrowsException()
+    {
+        int status = RyMain.invoke(new String[] { "test", "throw" });
+
+        assertEquals(1, status);
     }
 }
