@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>ry</artifactId>
-  <version>0.51</version>
+  <version>0.52</version>
   <name>Reaktivity Tool for Java</name>
   <description>Reaktivity Tool for Java</description>
   <url>https://github.com/reaktivity/ry.java</url>
@@ -74,12 +74,12 @@
     <dependency>
       <groupId>com.guicedee.services</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>62</version>
+      <version>1.1.0.7</version>
     </dependency>
     <dependency>
       <groupId>com.guicedee.services</groupId>
       <artifactId>commons-collections4</artifactId>
-      <version>62</version>
+      <version>1.1.0.7</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -110,6 +110,35 @@
             <test>SLASHSTAR_STYLE</test>
           </mapping>
           <failIfUnknown>true</failIfUnknown>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jasig.maven</groupId>
+        <artifactId>maven-notice-plugin</artifactId>
+        <version>1.1.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.1</version>
+          </dependency>
+          <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.5</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <includeScopes>compile</includeScopes>
+          <licenseMapping>src/conf/notice/license-mappings.xml</licenseMapping>
         </configuration>
         <executions>
           <execution>
@@ -215,6 +244,34 @@
         </configuration>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.jasig.maven</groupId>
+                    <artifactId>maven-notice-plugin</artifactId>
+                    <versionRange>[1.1.0,)</versionRange>
+                    <goals>
+                      <goal>check</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <profiles>
