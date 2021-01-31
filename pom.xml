@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>ry</artifactId>
-  <version>0.52</version>
+  <version>0.53</version>
   <name>Reaktivity Tool for Java</name>
   <description>Reaktivity Tool for Java</description>
   <url>https://github.com/reaktivity/ry.java</url>
@@ -181,6 +181,7 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.6</version>
         <configuration>
+          <propertyName>jacoco.java.option</propertyName>
           <excludes>
             <exclude>org/reaktivity/ry/internal/RyMain.class</exclude>
           </excludes>
@@ -212,23 +213,37 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.moditect</groupId>
+        <artifactId>moditect-maven-plugin</artifactId>
+        <version>1.0.0.RC1</version>
+        <configuration>
+          <module>
+            <moduleInfoFile>src/main/moditect/module-info.java</moduleInfoFile>
+          </module>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>add-module-info</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M2</version>
+        <version>3.0.0-M5</version>
         <configuration>
-          <useModulePath>false</useModulePath>
-          <argLine>@{argLine}</argLine>
-          <excludes>
-            <exclude/>
-          </excludes>
+          <argLine>@{jacoco.java.option}</argLine>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.22.1</version>
+        <version>3.0.0-M4</version>
         <configuration>
-          <argLine>@{argLine}</argLine>
+          <argLine>@{jacoco.java.option}</argLine>
         </configuration>
       </plugin>
       <plugin>
@@ -260,6 +275,19 @@
                     <versionRange>[1.1.0,)</versionRange>
                     <goals>
                       <goal>check</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.moditect</groupId>
+                    <artifactId>moditect-maven-plugin</artifactId>
+                    <versionRange>[1.0.0.RC1,)</versionRange>
+                    <goals>
+                      <goal>add-module-info</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
