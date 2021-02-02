@@ -16,5 +16,5 @@ This project includes:
   Airline - Library under The Apache License, Version 2.0
   Apache Commons Collections under The Apache License, Version 2.0
   Apache Commons Lang under The Apache License, Version 2.0
-  javax.inject under The Apache Software License, Version 2.0
+  Jakarta Dependency Injection under The Apache Software License, Version 2.0
 
