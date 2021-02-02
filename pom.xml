@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>ry</artifactId>
-  <version>0.53</version>
+  <version>0.54</version>
   <name>Reaktivity Tool for Java</name>
   <description>Reaktivity Tool for Java</description>
   <url>https://github.com/reaktivity/ry.java</url>
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>com.github.rvesse</groupId>
       <artifactId>airline</artifactId>
-      <version>2.8.0</version>
+      <version>2.8.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.commons</groupId>
