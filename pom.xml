@@ -486,10 +486,6 @@
                   <classifier>javadoc</classifier>
                   <file>${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar</file>
                 </artifact>
-                <artifact>
-                  <classifier>tests</classifier>
-                  <file>${project.build.directory}/${project.artifactId}-${project.version}-tests.jar</file>
-                </artifact>
               </artifacts>
             </configuration>
           </plugin>
