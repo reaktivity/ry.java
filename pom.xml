@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>ry</artifactId>
-  <version>0.56</version>
+  <version>0.57</version>
   <name>Reaktivity Tool for Java</name>
   <description>Reaktivity Tool for Java</description>
   <url>https://github.com/reaktivity/ry.java</url>
@@ -430,12 +430,6 @@
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>javadoc</classifier>
-                </artifact>
-                <artifact>
-                  <groupId>${project.groupId}</groupId>
-                  <artifactId>${project.artifactId}</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>tests</classifier>
                 </artifact>
               </artifactItems>
             </configuration>
